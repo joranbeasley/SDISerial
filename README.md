@@ -13,22 +13,22 @@ Verified for the following boards:
    
 INSTALLATION
 ------------
-    ###Option 1: Git checkout###
-	1. Open your terminal and cd to your root arduino folder
-	    - I use `cd C:\Arduino\arduino-1.0\`
-		- you will know your in the right place because it will contain "arduino.exe"
-	2. Change to your libraries folder `cd libraries`
-	3. Clone the git repository `git clone git@github.com:joranbeasley/SDISerial.git`
+###Option 1: Git checkout###
+1. Open your terminal and cd to your root arduino folder
+	- I use `cd C:\Arduino\arduino-1.0\`
+	- you will know your in the right place because it will contain "arduino.exe"
+2. Change to your libraries folder `cd libraries`
+3. Clone the git repository `git clone git@github.com:joranbeasley/SDISerial.git`
 	
-	###Option 2: Zip File###
-	1. Download Zipfile from link on the right
-	2. Unzip to the libraries folder listed above
-	3. Rename the extracted folder from `SDISerial-Master` to `SDISerial`
+###Option 2: Zip File###
+1. Download Zipfile from link on the right
+2. Unzip to the libraries folder listed above
+3. Rename the extracted folder from `SDISerial-Master` to `SDISerial`
 	
 INSTALATION VERIFICATION
 ------------------------
-	1. Open The Arduino IDE by running `arduino.exe` in the <Arduino_Root> folder.
-	2. Goto File > Examples > SDISerial > SDISerialExample
+1. Open The Arduino IDE by running `arduino.exe` in the <Arduino_Root> folder.
+2. Goto File > Examples > SDISerial > SDISerialExample
 
 The wiring for the example program is 
 

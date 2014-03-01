@@ -37,10 +37,34 @@ DOCUMENTATION
 -------------
 
 You instansiate the SDISerial class as follows
-> ####SDISerial(uint8_t DATAPIN,uint8_t INVERTED)	
-> **NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED <br/>_(SEE http://arduino.cc/en/Reference/attachInterrupt)_**<br/>
+> ####SDISerial::SDISerial(uint8_t DATAPIN,uint8_t INVERTED)	
     Arguments:<br/>&nbsp;&nbsp;&nbsp;  **DATAPIN(_integer_)** : the pin on the arduino that is connected to the data line of the sensor <br/>
                 &nbsp;&nbsp;&nbsp;**INVERTED(_integer_)**: this should **always** be 1 for SDI-12<br/>
     Returns  : SDISerial Object <br/><br/>
     Example  : `SDISerial communicator(2,1); // attach SDISerial object to PIN 2, invert the signal`
+> **NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED <br/>_(SEE http://arduino.cc/en/Reference/attachInterrupt)_**<br/>
 
+
+Once instanciated you must initialize it once the Arduino has done its stuff, typically you will initialize it in the `void setup()` method of arduino sketches
+
+> ####SDISerial::begin()
+    Arguments : NONE <br/>
+    Returns     : NONE <br/>
+    _Simply initializes our data pin and gets our library prepared to communicate_ <br/><b/>
+    Example     :  `void setup(){ communicator.begin(); }`
+    
+Last, but certainly not least is the communication with a sensor
+
+> ####SDISerial::sdi_cmd(char* command)
+    Arguments: **command(_char*_)** : the command to send the device<br/>
+    Returns    : NONE <br/>
+    _this method simply  sends a command to the device, use this method when you are not expecting a response back from the sensor_<br/><br/>
+    Example : `communicator.sdi_cmd("0A1"); //change address of sensor from 0 to 1`
+    
+    
+    ####SDISerial::sdi_query(char* command,uint32_t timeout_ms)
+    Arguments:<br/>&nbsp;&nbsp;&nbsp;&nbsp;**command(_char*)** : _see sdi_cmd documentation_<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;**timeout_ms(uint32_t)** :  How long to wait (maximum) for a response, expectes miliseconds.<br/>
+     Returns   : **result(_char*_)** : if there is no result or an empty result, it returns NULL<br/><br/>
+     Example  :  `char* result = communicator.sdi_query("?R0!",1000) // get measurement, wait up to a second for the result`
+     

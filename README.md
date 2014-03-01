@@ -38,7 +38,8 @@ DOCUMENTATION
 
 You instansiate the SDISerial class as follows
 ####SDISerial(uint8_t DATAPIN,uint8_t INVERTED)####	
-**NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED /
+**NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED 
+
 (SEE http://arduino.cc/en/Reference/attachInterrupt)**
     Arguments:  DATAPIN(integer) : the pin on the arduino that is connected to the data line of the sensor
                                                                

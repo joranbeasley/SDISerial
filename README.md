@@ -87,6 +87,8 @@ char output_buffer[125]; // just for uart prints
 void setup(){
       connection.begin();
       Serial.begin(9600);//so we can print to standard uart
+      //small delay to let the sensor do its startup stuff
+      delay(3000);//3 seconds should be more than enough
 }
 
 //main loop

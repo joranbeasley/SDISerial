@@ -37,9 +37,9 @@ DOCUMENTATION
 -------------
 
 You instansiate the SDISerial class as follows
-> ####SDISerial::SDISerial(uint8_t DATAPIN,uint8_t INVERTED)	
+> ####SDISerial::SDISerial(uint8_t DATAPIN,uint8_t INVERTED = true)	
 > Arguments:<br/>&nbsp;&nbsp;&nbsp;  **DATAPIN(_integer_)** : the pin on the arduino that is connected to the data line of the sensor <br/>
-> &nbsp;&nbsp;&nbsp;**INVERTED(_integer_)**: this should **always** be 1 for SDI-12<br/>
+> &nbsp;&nbsp;&nbsp;**INVERTED(_integer_)**: this should **always** be true for standard SDI-12 Communications<br/>
 > Returns  : SDISerial Object <br/><br/>
 > Example  : `SDISerial communicator(2,1); // attach SDISerial object to PIN 2, invert the signal`
 > **NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED <br/>_(SEE http://arduino.cc/en/Reference/attachInterrupt)_**<br/>
@@ -67,4 +67,28 @@ Last, but certainly not least is the communication with a sensor
 > &nbsp;&nbsp;&nbsp;&nbsp;**timeout_ms(uint32_t)** :  How long to wait (maximum) for a response, expectes miliseconds.<br/>
 > Returns   : **result(_char*_)** : if there is no result or an empty result, it returns NULL<br/><br/>
 > Example  :  `char* result = communicator.sdi_query("?R0!",1000) // get measurement, wait up to a second for the result`
-     
+
+
+thats it... pretty simple interface.
+
+here is a very simple example (make sure you have connected your data, power, and ground lines as illustrated above)
+
+
+	#include <SDISerial.h>
+	#define DATA_PIN 2
+	SDISerrial connection(DATA_PIN);
+	char output_buffer[125]; // just for uart prints
+	//initialize variables
+	void setup(){
+	      connection.begin();
+	      Serial.begin(9600);//so we can print to standard uart
+	}
+	//main loop
+	void loop(){
+	    //print to uart
+	    Serial.println("Begin Command: ?R0!");
+	    char* resp = connection.sdi_query("?R0!",1000);//1 second timeout
+	    sprintf(output_buffer,"RECV: %s"",resp?resp:"No Response Recieved!!");
+	    Serial.println(output_buffer);
+	    delay(10000);//sleep for 10 seconds before the next read
+	}

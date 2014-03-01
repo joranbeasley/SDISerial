@@ -61,13 +61,18 @@ private:
 
   uint16_t _buffer_overflow:1;
   uint16_t _inverse_logic:1;
+  
 
+  //sdi12 stuff 
+  char response[255];
+  bool response_ready;
+  char response_complete_byte;
   // static data
   static char _receive_buffer[_SS_MAX_RX_BUFF]; 
   static volatile uint8_t _receive_buffer_tail;
   static volatile uint8_t _receive_buffer_head;
   static SDISerial *active_object;
-
+  
   // private methods
   void recv();
   uint8_t rx_pin_read();
@@ -77,33 +82,31 @@ private:
   void setRX(uint8_t receivePin);
   // private static method for timing
   static inline void tunedDelay(uint16_t delay);
-
-public:
-  // public methods
-  SDISerial(uint8_t dataPin, bool inverse_logic = false);
-  ~SDISerial();
-  char response[255];
-  bool response_ready;
-  char response_complete_byte;
-  void begin();
-  bool listen();
-  void end();
-  bool isListening() { return this == active_object; }
+  //private methods for sdi12
+    bool isListening() { return this == active_object; }
   bool overflow() { bool ret = _buffer_overflow; _buffer_overflow = false; return ret; }
   int peek();
-
+  void end();
   virtual size_t write(uint8_t byte);
   virtual int read();
   virtual int available();
   virtual void flush();
-  
+  bool listen();
   using Print::write;
-
-  // public only for easy access by interrupt handlers
-  static inline void handle_interrupt();
+  uint8_t* read_buffer();
+  
+public:
+  // public methods
+  SDISerial(uint8_t dataPin, bool inverse_logic = true);
+  ~SDISerial(){end();}
+  void begin();
+  
   void sdi_cmd(const char* bytes);
   char* sdi_query(const char* bytes,uint32_t timeout_ms);
-  uint8_t* read_buffer();
+  
+  // public only for easy access by interrupt handlers
+  static inline void handle_interrupt();
+  
 };
 
 // Arduino 0012 workaround

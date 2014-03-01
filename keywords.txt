@@ -13,13 +13,6 @@ SDISerial	KEYWORD1
 #######################################
 
 begin	KEYWORD2
-end	KEYWORD2
-read	KEYWORD2
-available	KEYWORD2
-isListening	KEYWORD2
-overflow	KEYWORD2
-flush	KEYWORD2
-listen	KEYWORD2
 sdi_query	KEYWORD2
 sdi_cmd	KEYWORD2
 
@@ -27,7 +20,4 @@ sdi_cmd	KEYWORD2
 # Constants (LITERAL1)
 #######################################
 
-response_ready	LITERAL
-response	LITERAL
-response_complete_byte	LITERAL
 

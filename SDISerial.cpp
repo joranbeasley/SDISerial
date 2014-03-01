@@ -355,13 +355,6 @@ SDISerial::SDISerial(uint8_t dataPin, bool inverse_logic /* = false */) :
   response[0] = '\0';
 }
 
-//
-// Destructor
-//
-SDISerial::~SDISerial()
-{
-  end();
-}
 
 void SDISerial::setTX(uint8_t tx)
 {

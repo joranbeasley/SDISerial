@@ -10,7 +10,9 @@ Works flawlessly with an assortment of [Decagon Devices Soil Moisture Sensors.](
 Verified for the following boards: 
    - [Arduino UNO](http://arduino.cc/en/Main/arduinoBoardUno)
    - [Arduino MEGA2560](http://arduino.cc/en/Main/ArduinoBoardMega2560)
-   
+
+This is currently untested with more than one device on the serial bus
+
 INSTALLATION
 ------------
 ###Option 1: Git checkout###
@@ -61,7 +63,8 @@ Last, but certainly not least is the communication with a sensor
 > _this method simply  sends a command to the device, use this method when you are not expecting a response back from the sensor_<br/><br/>
 > Example : `communicator.sdi_cmd("0A1"); //change address of sensor from 0 to 1`
     
-    
+and sensor responses
+
 > ####SDISerial::sdi_query(char* command,uint32_t timeout_ms)
 > Arguments:<br/>&nbsp;&nbsp;&nbsp;&nbsp;**command(_char*)** : _see sdi_cmd documentation_<br/>
 > &nbsp;&nbsp;&nbsp;&nbsp;**timeout_ms(uint32_t)** :  How long to wait (maximum) for a response, expectes miliseconds.<br/>
@@ -79,16 +82,21 @@ here is a very simple example (make sure you have connected your data, power, an
 #define DATA_PIN 2
 SDISerrial connection(DATA_PIN);
 char output_buffer[125]; // just for uart prints
+
 //initialize variables
 void setup(){
       connection.begin();
       Serial.begin(9600);//so we can print to standard uart
 }
+
 //main loop
 void loop(){
     //print to uart
     Serial.println("Begin Command: ?R0!");
+    
+    //send measurement query (R0) to the first device on our bus
     char* resp = connection.sdi_query("?R0!",1000);//1 second timeout
+    
     sprintf(output_buffer,"RECV: %s"",resp?resp:"No Response Recieved!!");
     Serial.println(output_buffer);
     delay(10000);//sleep for 10 seconds before the next read

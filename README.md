@@ -73,22 +73,24 @@ thats it... pretty simple interface.
 
 here is a very simple example (make sure you have connected your data, power, and ground lines as illustrated above)
 
+```c++
 
-	#include <SDISerial.h>
-	#define DATA_PIN 2
-	SDISerrial connection(DATA_PIN);
-	char output_buffer[125]; // just for uart prints
-	//initialize variables
-	void setup(){
-	      connection.begin();
-	      Serial.begin(9600);//so we can print to standard uart
-	}
-	//main loop
-	void loop(){
-	    //print to uart
-	    Serial.println("Begin Command: ?R0!");
-	    char* resp = connection.sdi_query("?R0!",1000);//1 second timeout
-	    sprintf(output_buffer,"RECV: %s"",resp?resp:"No Response Recieved!!");
-	    Serial.println(output_buffer);
-	    delay(10000);//sleep for 10 seconds before the next read
-	}
+#include <SDISerial.h>
+#define DATA_PIN 2
+SDISerrial connection(DATA_PIN);
+char output_buffer[125]; // just for uart prints
+//initialize variables
+void setup(){
+      connection.begin();
+      Serial.begin(9600);//so we can print to standard uart
+}
+//main loop
+void loop(){
+    //print to uart
+    Serial.println("Begin Command: ?R0!");
+    char* resp = connection.sdi_query("?R0!",1000);//1 second timeout
+    sprintf(output_buffer,"RECV: %s"",resp?resp:"No Response Recieved!!");
+    Serial.println(output_buffer);
+    delay(10000);//sleep for 10 seconds before the next read
+}
+```

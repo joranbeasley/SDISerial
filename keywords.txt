@@ -29,3 +29,5 @@ sdi_cmd	KEYWORD2
 
 response_ready	LITERAL
 response	LITERAL
+response_complete_byte	LITERAL
+

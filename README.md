@@ -99,7 +99,7 @@ void loop(){
     //send measurement query (R0) to the first device on our bus
     char* resp = connection.sdi_query("?R0!",1000);//1 second timeout
     
-    sprintf(output_buffer,"RECV: %s"",resp?resp:"No Response Recieved!!");
+    sprintf(output_buffer,"RECV: %s",resp?resp:"No Response Recieved!!");
     Serial.println(output_buffer);
     delay(10000);//sleep for 10 seconds before the next read
 }

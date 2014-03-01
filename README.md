@@ -39,8 +39,8 @@ DOCUMENTATION
 You instansiate the SDISerial class as follows
 > ####SDISerial(uint8_t DATAPIN,uint8_t INVERTED)	
 > **NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED <br/>_(SEE http://arduino.cc/en/Reference/attachInterrupt)_**<br/>
-    Arguments:  **DATAPIN(_integer_)** : the pin on the arduino that is connected to the data line of the sensor <br/>
-                **INVERTED(_integer_)**: if the signal should be inverted... this should **always** be 1 for SDI-12<br/>
+    Arguments:<br/>&nbsp;&nbsp;&nbsp;  **DATAPIN(_integer_)** : the pin on the arduino that is connected to the data line of the sensor <br/>
+                &nbsp;&nbsp;&nbsp;**INVERTED(_integer_)**: this should **always** be 1 for SDI-12<br/>
     Returns  : SDISerial Object <br/><br/>
     Example  : `SDISerial communicator(2,1); // attach SDISerial object to PIN 2, invert the signal`
 

@@ -340,7 +340,7 @@ ISR(PCINT3_vect)
 //
 // Constructor
 //
-SDISerial::SDISerial(uint8_t dataPin, bool inverse_logic /* = false */) : 
+SDISerial::SDISerial(uint8_t dataPin, bool inverse_logic /* = true*/) : 
   _rx_delay_centering(0),
   _rx_delay_intrabit(0),
   _rx_delay_stopbit(0),

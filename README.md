@@ -80,7 +80,7 @@ here is a very simple example (make sure you have connected your data, power, an
 
 #include <SDISerial.h>
 #define DATA_PIN 2
-SDISerrial connection(DATA_PIN);
+SDISerial connection(DATA_PIN);
 char output_buffer[125]; // just for uart prints
 
 //initialize variables

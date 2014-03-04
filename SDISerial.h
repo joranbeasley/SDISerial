@@ -104,6 +104,7 @@ public:
   void sdi_cmd(const char* bytes);
   char* sdi_query(const char* bytes,uint32_t timeout_ms);
   char* wait_for_response(uint32_t timeout_ms);
+  char* service_request(const char* service_request,const char* read_command);
   // public only for easy access by interrupt handlers
   static inline void handle_interrupt();
   

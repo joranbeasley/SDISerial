@@ -88,10 +88,12 @@ here is a very simple example (make sure you have connected your data, power, an
 ```c++
 
 #include <SDISerial.h>
+#include <string.h>
 #define DATA_PIN 2
 SDISerial connection(DATA_PIN);
 char output_buffer[125]; // just for uart prints
-
+char tmp_buffer[4];
+char sensor_info[]
 //initialize variables
 void setup(){
       connection.begin();
@@ -106,7 +108,8 @@ void loop(){
     Serial.println("Begin Command: ?R0!");
     
     //send measurement query (R0) to the first device on our bus
-    char* resp = connection.sdi_query("?R0!",1000);//1 second timeout
+    char* resp = connection.sdi_query("?M!",1000);//1 second timeout
+    //this really just returns a message that tells you the maximum wait before the measurement is ready
     
     sprintf(output_buffer,"RECV: %s",resp?resp:"No Response Recieved!!");
     Serial.println(output_buffer);

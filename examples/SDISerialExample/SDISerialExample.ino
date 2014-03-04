@@ -24,6 +24,13 @@ the remaining wire must be connected to ground
 
 SDISerial sdi_serial_connection(DATALINE_PIN, INVERTED);
 
+char* get_measurement(){
+	char* service_request = sdi_serial_connection.sdi_query("?M!",1000);
+	//you can use the time returned above to wait for the service_request_complete
+	char* service_request_complete = sdi_serial_connection.wait_for_response(1000);
+	//dont worry about waiting too long it will return once it gets a response
+	return sdi_serial_connection.sdi_query("?D0!",1000);
+}
 
 void setup(){
   sdi_serial_connection.begin(); // start our SDI connection 
@@ -35,9 +42,9 @@ void setup(){
 int j=0;
 void loop(){
   uint8_t wait_for_response_ms = 1000;
-  char* response = sdi_serial_connection.sdi_query("?R0!",wait_for_response_ms); // get measurement data
+  char* response = get_measurement(); // get measurement data
   //if you you didnt need a response you could simply do
   //         sdi_serial_connection.sdi_cmd("0A1") 
-  Serial.print("RECV:");Serial.println(response[0] != '\0'?response:"No Response!"); //just a debug print statement to the serial port
+  Serial.print("RECV:");Serial.println(response!=NULL&&response[0] != '\0'?response:"No Response!"); //just a debug print statement to the serial port
   delay(500);
 }

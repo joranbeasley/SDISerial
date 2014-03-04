@@ -402,7 +402,12 @@ see the integrators guide for the timing information and commands available.
 char* SDISerial::sdi_query(const char* cmd,uint32_t timeout_ms){
   flush(); // clear current buffer
   sdi_cmd(cmd);//send command
-  return wait_for_response(timeout_ms)
+  return wait_for_response(timeout_ms);
+}
+char* SDISerial::service_request(const char* service_request,const char* read_command){
+	char* service_request_response = sdi_query(service_request,1000);
+	if (service_request_response == NULL || service_request_response == '\0')return NULL;
+	char* response_ready = wait_for_response(1000);
 }
 
 void SDISerial::setRX(uint8_t rx)
@@ -455,6 +460,7 @@ void SDISerial::end()
 }
 
 char* SDISerial::wait_for_response(uint32_t timeout_ms){
+  flush();
   int delay_counts = 1 + timeout_ms/10; // number of times to delay
   //wait for response
   while (delay_counts-- > 0 && !response_ready)delay(10);

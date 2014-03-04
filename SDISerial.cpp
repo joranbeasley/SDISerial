@@ -402,13 +402,7 @@ see the integrators guide for the timing information and commands available.
 char* SDISerial::sdi_query(const char* cmd,uint32_t timeout_ms){
   flush(); // clear current buffer
   sdi_cmd(cmd);//send command
-  int delay_counts = 1 + timeout_ms/10; // number of times to delay
-  //wait for response
-  
-  while (delay_counts-- > 0 && !response_ready)delay(10);
-  if(!response_ready)return NULL;//no response recieved
-  read_buffer();//process input buffer
-  return response;//return the response
+  return wait_for_response(timeout_ms)
 }
 
 void SDISerial::setRX(uint8_t rx)
@@ -460,7 +454,14 @@ void SDISerial::end()
     *digitalPinToPCMSK(_receivePin) &= ~_BV(digitalPinToPCMSKbit(_receivePin));
 }
 
-
+char* SDISerial::wait_for_response(uint32_t timeout_ms){
+  int delay_counts = 1 + timeout_ms/10; // number of times to delay
+  //wait for response
+  while (delay_counts-- > 0 && !response_ready)delay(10);
+  if(!response_ready)return NULL;//no response recieved
+  read_buffer();//process input buffer
+  return response;//return the response
+}
 // Read data from buffer
 int SDISerial::read()
 {

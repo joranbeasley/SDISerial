@@ -65,6 +65,15 @@ Last, but certainly not least is the communication with a sensor
     
 and sensor responses
 
+> ####SDISerial::wait_for_response(uint32_t timeout_ms)
+> Arguments: **timeout_ms( _uint32_t_ )**: the maximum wait time in miliseconds <br/>
+> Returns    : **response(_char*_)** : the string response or NULL if timeout <br/><br/>
+> Example   :  
+```c++
+char* prep_measurements = connection.sdi_query("?M!");
+char* read_ready=connection.wait_for_response(1000);
+char* measurements = connection.sdi_query("?D0!")`
+```
 > ####SDISerial::sdi_query(char* command,uint32_t timeout_ms)
 > Arguments:<br/>&nbsp;&nbsp;&nbsp;&nbsp;**command(_char*)** : _see sdi_cmd documentation_<br/>
 > &nbsp;&nbsp;&nbsp;&nbsp;**timeout_ms(uint32_t)** :  How long to wait (maximum) for a response, expectes miliseconds.<br/>

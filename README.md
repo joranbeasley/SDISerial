@@ -39,6 +39,11 @@ DOCUMENTATION
 -------------
 #[** READ THE DOCS HERE **](https://dl.dropboxusercontent.com/u/18004504/Arduino/SDISerial/index.html)
 
+Simple Example
+-------------------
+This library was designed with ease of use in mind.  Here is a simple example program to get you started. 
+
+for more info see the included examples and [_read the docs_](https://dl.dropboxusercontent.com/u/18004504/Arduino/SDISerial/index.html)
 ```c++
 
 #include <SDISerial.h>

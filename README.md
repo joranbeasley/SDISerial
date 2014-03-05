@@ -11,7 +11,7 @@ Verified for the following boards:
    - [Arduino UNO](http://arduino.cc/en/Main/arduinoBoardUno)
    - [Arduino MEGA2560](http://arduino.cc/en/Main/ArduinoBoardMega2560)
 
-This is currently untested with more than one device on the serial bus
+This is currently untested with more than one device on the serial bus, although I would fully expect it to work.  hopefully I will have time soon to try it with more devices on the serial bus.
 
 INSTALLATION
 ------------

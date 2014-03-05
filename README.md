@@ -37,53 +37,10 @@ The wiring for the example program is
 
 DOCUMENTATION
 -------------
+###[READ THE DOCS](https://dl.dropboxusercontent.com/u/18004504/Arduino/SDISerial/index.html)
 
-You instansiate the SDISerial class as follows
-> ####SDISerial::SDISerial(uint8_t DATAPIN,uint8_t INVERTED = true)	
-> Arguments:<br/>&nbsp;&nbsp;&nbsp;  **DATAPIN(_integer_)** : the pin on the arduino that is connected to the data line of the sensor <br/>
-> &nbsp;&nbsp;&nbsp;**INVERTED(_integer_)**: this should **always** be true for standard SDI-12 Communications<br/>
-> Returns  : SDISerial Object <br/><br/>
-> Example  : `SDISerial communicator(2,1); // attach SDISerial object to PIN 2, invert the signal`
-> **NOTE IN ORDER TO RECIEVE DATA THE _DATAPIN_ MUST HAVE INTERRUPTS ENABLED <br/>_(SEE http://arduino.cc/en/Reference/attachInterrupt)_**<br/>
-
-
-Once instanciated you must initialize it once the Arduino has done its stuff, typically you will initialize it in the `void setup()` method of arduino sketches
-
-> ####SDISerial::begin()
-> Arguments : NONE <br/>
-> Returns     : NONE <br/>
-> _Simply initializes our data pin and gets our library prepared to communicate_ <br/><b/>
-> Example     :  `void setup(){ communicator.begin(); }`
-    
-Last, but certainly not least is the communication with a sensor
-
-> ####SDISerial::sdi_cmd(char* command)
-> Arguments: **command(_char*_)** : the command to send the device<br/>
-> Returns    : NONE <br/>
-> _this method simply  sends a command to the device, use this method when you are not expecting a response back from the sensor_<br/><br/>
-> Example : `communicator.sdi_cmd("0A1"); //change address of sensor from 0 to 1`
-    
-and sensor responses
-
-> ####SDISerial::wait_for_response(uint32_t timeout_ms)
-> Arguments: **timeout_ms( _uint32_t_ )**: the maximum wait time in miliseconds <br/>
-> Returns    : **response(_char*_)** : the string response or NULL if timeout <br/><br/>
-> Example   :  
-```c++
-char* prep_measurements = connection.sdi_query("?M!");
-char* read_ready=connection.wait_for_response(1000);
-char* measurements = connection.sdi_query("?D0!")`
-```
-> ####SDISerial::sdi_query(char* command,uint32_t timeout_ms)
-> Arguments:<br/>&nbsp;&nbsp;&nbsp;&nbsp;**command(_char*)** : _see sdi_cmd documentation_<br/>
-> &nbsp;&nbsp;&nbsp;&nbsp;**timeout_ms(uint32_t)** :  How long to wait (maximum) for a response, expectes miliseconds.<br/>
-> Returns   : **result(_char*_)** : if there is no result or an empty result, it returns NULL<br/><br/>
-> Example  :  `char* result = communicator.sdi_query("?R0!",1000) // get measurement, wait up to a second for the result`
-
-
-thats it... pretty simple interface.
-
-here is a very simple example (make sure you have connected your data, power, and ground lines as illustrated above)
+SIMPLE EXAMPLE
+--------------
 
 ```c++
 
@@ -92,7 +49,7 @@ here is a very simple example (make sure you have connected your data, power, an
 #define DATA_PIN 2
 SDISerial connection(DATA_PIN);
 char output_buffer[125]; // just for uart prints
-char tmp_buffer[4];
+
 char sensor_info[]
 //initialize variables
 void setup(){
@@ -100,6 +57,12 @@ void setup(){
       Serial.begin(9600);//so we can print to standard uart
       //small delay to let the sensor do its startup stuff
       delay(3000);//3 seconds should be more than enough
+	  
+	  //Simple Query  
+	  char* sensor_info = connection.sdi_query("0I!"); // get the info for the sensor at address 0 
+	  //if you dont know the address you could send connection.sdi_query("?I!");
+	  sprintf(output_buffer,"SENSOR INFO: %s",sensor_info?sensor_info:"No Response Recieved!!");
+      Serial.println(output_buffer);
 }
 
 //main loop
@@ -107,11 +70,10 @@ void loop(){
     //print to uart
     Serial.println("Begin Command: ?R0!");
     
-    //send measurement query (R0) to the first device on our bus
-    char* resp = connection.sdi_query("?M!",1000);//1 second timeout
-    //this really just returns a message that tells you the maximum wait before the measurement is ready
+    //send measurement query 
+    char* measurement_data = connection.service_request("0M!","0D0!");//get measurement data from sensor 0
     
-    sprintf(output_buffer,"RECV: %s",resp?resp:"No Response Recieved!!");
+    sprintf(output_buffer,"RECV: %s",measurement_data?measurement_data:"No Response Recieved!!");
     Serial.println(output_buffer);
     delay(10000);//sleep for 10 seconds before the next read
 }

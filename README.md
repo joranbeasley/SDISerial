@@ -34,6 +34,7 @@ INSTALATION VERIFICATION
 
 The wiring for the example program is 
 ![Wiring Diagram](examples/ATMEGA_SDI_HOOKUP.png)
+*note*:Depending on the sensor used you may need more than 5V, for Decagon Sensors 5V should be sufficient.
 
 DOCUMENTATION
 -------------

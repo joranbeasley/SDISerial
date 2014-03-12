@@ -31,7 +31,7 @@ void setup(){
   Serial.begin(9600); // start our uart
   Serial.println("OK INITIALIZED"); // startup string echo'd to our uart
   delay(3000); // startup delay to allow sensor to powerup and output its DDI serial string
-  char* sensor_info = connection.sdi_query("?I!"); // get sensor info
+  char* sensor_info = connection.sdi_query("?I!",1000); // get sensor info
   //print to uart
   sprintf(output_buffer,"Sensor Info: %s",sensor_info?sensor_info:"No Response");
   Serial.println(output_buffer);

@@ -53,7 +53,7 @@ for more info see the included examples and [_read the docs_](https://dl.dropbox
 SDISerial connection(DATA_PIN);
 char output_buffer[125]; // just for uart prints
 char tmp_buffer[4];
-char sensor_info[];
+
 //initialize variables
 void setup(){
       connection.begin();

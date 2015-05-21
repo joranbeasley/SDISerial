@@ -65,9 +65,9 @@ void setup(){
 //main loop
 void loop(){
     //print to uart
-    Serial.println("Begin Command: ?R0!");
+    Serial.println("Begin Command: ?M!");
     
-    //send measurement query (R0) to the first device on our bus
+    //send measurement query (M) to the first device on our bus
     char* resp = connection.sdi_query("?M!",1000);//1 second timeout
     //this really just returns a message that tells you the maximum wait before the measurement is ready
     

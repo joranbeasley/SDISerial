@@ -54,8 +54,9 @@ typedef struct _DELAY_TABLE
   unsigned short tx_delay;
 } DELAY_TABLE;
 
-#if F_CPU == 16000000
 static const uint8_t pin2int[23] = {-1, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 2, 3};
+#if F_CPU == 16000000
+
 static const DELAY_TABLE PROGMEM table[] = 
 {
   //  baud    rxcenter   rxintra    rxstop    tx
